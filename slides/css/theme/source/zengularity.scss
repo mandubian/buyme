@@ -1,0 +1,77 @@
+/**
+ * Zengularity theme for reveal.js.
+ * Author: Paul Dijou
+ */
+
+
+// Default mixins and settings -----------------
+@import "../template/mixins";
+@import "../template/settings";
+// ---------------------------------------------
+
+
+
+// Include theme-specific fonts
+@font-face {
+  font-family: 'League Gothic';
+  src: url('../../lib/font/league_gothic-webfont.eot');
+  src: url('../../lib/font/league_gothic-webfont.eot?#iefix') format('embedded-opentype'),
+     url('../../lib/font/league_gothic-webfont.woff') format('woff'),
+     url('../../lib/font/league_gothic-webfont.ttf') format('truetype'),
+     url('../../lib/font/league_gothic-webfont.svg#LeagueGothicRegular') format('svg');
+
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-weight: 400;
+  src: local('EB Garamond'), local('EBGaramond'), url(http://themes.googleusercontent.com/static/fonts/ebgaramond/v4/kYZt1bJ8UsGAPRGnkXPeFYbN6UDyHWBl620a-IRfuBk.woff) format('woff');
+}
+
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic);
+
+
+/**
+ * Zengularity colors
+ */
+html * {
+  color-profile: sRGB;
+  rendering-intent: auto;
+}
+
+// Zengularity colors
+$base:      #f8f8f8;
+$text:      #444444;
+$red:       #f94d4d;
+$redAlt:    #bc4c4b;
+$bluePale:  #f2f5fa;
+$gray:       #333333;
+
+// Override theme settings (see ../template/settings.scss)
+$mainColor: $text;
+$headingColor: $red;
+$headingTextShadow: none;
+$backgroundColor: $base;
+$linkColor: $redAlt;
+$linkColorHover: lighten( $linkColor, 20% );
+$selectionBackgroundColor: $bluePale;
+
+// Background generator
+//@mixin bodyBackground() {
+//  background-image: 'image/zengularity/bg.jpg';
+//}
+
+
+
+// Theme template ------------------------------
+@import "../template/theme";
+// ---------------------------------------------
+
+.backgrounds {
+  .slide-background {
+    background-image: url(image/zengularity/bg.jpg);
+  }
+}
