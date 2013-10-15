@@ -75,3 +75,28 @@ $selectionBackgroundColor: $bluePale;
     background-image: url(image/zengularity/bg.jpg);
   }
 }
+
+.reveal section img.unstyled {
+  border: 0px;
+  box-shadow: none;
+}
+
+img.logo {
+  width: 200px;
+}
+
+span.logo {
+  position: relative;
+  bottom: 25px;
+  letter-spacing: 10px;
+  font-size: 72px;
+  margin-left: 20px;
+}
+
+.red {
+  color: $red;
+}
+
+.upper {
+  text-transform: uppercase;
+}
