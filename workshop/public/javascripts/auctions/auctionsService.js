@@ -3,7 +3,7 @@ app.factory('Auctions', ['Restangular', function (Restangular) {
   // Will do a GET at '/Auctions' and return a promise
   // which will return a JSON array when resolved
   function all() {
-    return Restangular.all('auctions').getList({ "q" : "{}" });
+    return Restangular.all('auctions').getList();
   }
 
   // Will do a GET at '/Auctions/:id' and return a promise
