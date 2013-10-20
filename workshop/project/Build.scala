@@ -21,7 +21,7 @@ object ApplicationBuild extends Build {
     // Add your project dependencies here,
     "org.reactivemongo" %% "play2-reactivemongo" % "0.10.0-SNAPSHOT",
     "play-autosource"   %% "reactivemongo"       % "2.0-SNAPSHOT",
-    "org.mandubian"     %% "play-actor-room"     % "0.1"
+    "org.mandubian"     %% "play-actor-room"     % "0.2"
   )
 
   val main = play.Project(appName, appVersion, appDependencies).settings(

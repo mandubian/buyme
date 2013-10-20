@@ -37,6 +37,6 @@ object Application extends Controller {
     Ok(routes.Application.websocket(id).webSocketURL().toString)
   }
 
-  def websocket(id: String) = services.AuctionGlobal.async(services.AuctionGlobal.room.map(_.websocket[Receiver, JsValue](id)))
+  def websocket(id: String) = Room.async(services.AuctionGlobal.room.map(_.websocket[Receiver, JsValue](id)))
 
 }

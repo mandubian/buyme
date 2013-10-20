@@ -14,12 +14,6 @@ object AuctionGlobal {
   private val roomP = Promise[Room]()
   val room : Future[Room] = roomP.future
 
-  def async[A]( fws: => Future[WebSocket[A]] )(implicit frameFormatter: WebSocket.FrameFormatter[A]) = {
-    WebSocket[A](h => (e, i) => {
-      fws onSuccess { case ws => ws.f(h)(e, i) }
-    })
-  }
-
   def init(implicit app: play.api.Application) {
     val room = Room()
     roomP.success(room)
