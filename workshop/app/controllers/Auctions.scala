@@ -44,27 +44,32 @@ object Auctions extends ReactiveMongoAutoSourceController[Auction] {
   def addOffer(idAuction: String) = Action.async(parse.json) { implicit request =>
     request.body.validate[Offer].fold(
       errors => Future(BadRequest(JsError.toFlatJson(errors))),
-      offer => this.res.get(BSONObjectID(idAuction)).flatMap {
-        case Some((auction, id)) => {
-          val updatedAuction = auction.copy( offers = auction.offers:+(offer) )
-
-          this.res.update(id, updatedAuction).map { _ =>
-            services.AuctionGlobal.room.foreach{ room =>
-              room.supervisor ! Broadcast(
-                offer.buyer,
-                Json.obj(
-                  "id" -> Json.toJson(id), 
-                  "kind" -> "offer", 
-                  "action" -> "new",
-                  "value" -> (Json.obj("id" -> idAuction) ++ Json.toJson(updatedAuction).as[JsObject])
+      offer => this.res.batchUpdate(
+        Json.obj("_id" -> Json.obj("$oid" -> idAuction), "hasEnded" -> false, "maxOffer" -> Json.obj("lt" -> offer.amount)),
+        Json.obj("$push" -> Json.obj("offers" -> offer, "maxOffer" -> offer.amount))
+      ).flatMap { lastError =>
+        if (lastError.n == 1) {
+          this.res.get(BSONObjectID(idAuction)).map {
+            case Some((auction, id)) => {
+              services.AuctionGlobal.room.foreach{ room =>
+                room.supervisor ! Broadcast(
+                  offer.buyer,
+                  Json.obj(
+                    "id" -> idAuction, 
+                    "kind" -> "offer", 
+                    "action" -> "new",
+                    "value" -> (Json.obj("id" -> idAuction) ++ Json.toJson(auction).as[JsObject])
+                  )
                 )
-              )
-            }
+              }
 
-            Ok(Json.toJson(updatedAuction)) 
+              Ok(Json.toJson(auction))
+            }
+            case None => NotFound
           }
+        } else {
+          Future(BadRequest("Your offer has been refused (amount too small or auction not available anymore)"))
         }
-        case None => Future(NotFound)
       }
     )
   }

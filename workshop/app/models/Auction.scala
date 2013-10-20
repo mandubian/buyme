@@ -11,7 +11,8 @@ case class Auction (
 	startPrice: Long,
 	offers: List[Offer],
 	seller: String,
-  hasEnded: Boolean
+  hasEnded: Boolean,
+  maxOffer: Long
 )
 
 object Auction {
