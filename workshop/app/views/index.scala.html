@@ -12,7 +12,7 @@
       </div>
       <div class="panel-body">
         <p>
-          Started at: {{ auction.startDate | date:'HH:mm' }}, end at: {{ auction.endDate | date:'HH:mm' }}
+          Started at: {{ auction.startDate | date:'HH:mm:ss' }}, end at: {{ auction.endDate | date:'HH:mm:ss' }}
         </p>
         <p ng-if="!auction.offers.length">
           No offer yet. Be the first!
